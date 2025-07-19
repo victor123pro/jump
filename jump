@@ -2,6 +2,41 @@ local player = game:GetService("Players").LocalPlayer
 local character = player.Character or player.CharacterAdded:Wait()
 local humanoid = character:WaitForChild("Humanoid")
 
-humanoid.JumpPower = 50 -- of wat jouw originele waarde was
-humanoid.UseJumpPower = true
-humanoid.Jump = true
+-- GUI maken
+local gui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
+gui.Name = "JumpToggleGUI"
+
+local button = Instance.new("TextButton", gui)
+button.Size = UDim2.new(0, 200, 0, 50)
+button.Position = UDim2.new(0, 20, 0, 100)
+button.Text = "Jump: ON"
+button.BackgroundColor3 = Color3.fromRGB(50, 150, 50)
+button.TextColor3 = Color3.new(1, 1, 1)
+button.Font = Enum.Font.SourceSansBold
+button.TextSize = 24
+button.BorderSizePixel = 0
+
+-- Staat bijhouden
+local jumpEnabled = true
+
+local function updateJumpState()
+	if jumpEnabled then
+		humanoid.JumpPower = 50
+		humanoid.UseJumpPower = true
+		button.Text = "Jump: ON"
+		button.BackgroundColor3 = Color3.fromRGB(50, 150, 50)
+	else
+		humanoid.JumpPower = 0
+		humanoid.UseJumpPower = false
+		button.Text = "Jump: OFF"
+		button.BackgroundColor3 = Color3.fromRGB(150, 50, 50)
+	end
+end
+
+button.MouseButton1Click:Connect(function()
+	jumpEnabled = not jumpEnabled
+	updateJumpState()
+end)
+
+-- Initialiseren
+updateJumpState()
