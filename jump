@@ -1,0 +1,7 @@
+local player = game:GetService("Players").LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+
+humanoid.JumpPower = 50 -- of wat jouw originele waarde was
+humanoid.UseJumpPower = true
+humanoid.Jump = true
